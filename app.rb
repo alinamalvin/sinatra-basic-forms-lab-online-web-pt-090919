@@ -2,13 +2,17 @@ require_relative 'config/environment'
 
 class App < Sinatra::Base
 
-  get '/' do
+  get "/" do
     erb :index
   end
 
-  post '/' do
-  @analyzed_text = TextAnalyzer.new(params[:user_text])
- 
-  erb :results
-end
+  get "/new" do
+    erb :create_puppy
+  end
+
+  post "/puppy" do
+    @puppy = Puppy.new(params[:name], params[:breed], params[:age])
+    erb :display_puppy
+  end
+
 end
