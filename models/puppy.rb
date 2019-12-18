@@ -1,43 +1,18 @@
-# since we are not using ActiveRecord in this lab, you write a bare Ruby model (like you did in MOD1)
-class TextAnalyzer
-  attr_reader :text
- 
-  def initialize(text)
-    @text = text.downcase
+require_relative 'config/environment'
+
+class App < Sinatra::Base
+
+  get "/" do
+    erb :index
   end
- 
-  def count_of_words
-    words = text.split(" ")
-    words.count
+
+  get "/new" do
+    erb :create_puppy
   end
- 
-  def count_of_vowels
-    text.scan(/[aeoui]/).count
+
+  post "/puppy" do
+    @puppy = Puppy.new(params[:name], params[:breed], params[:age])
+    erb :display_puppy
   end
- 
-  def count_of_consonants
-    text.scan(/[bcdfghjklmnpqrstvwxyz]/).count
-  end
- 
-  def most_used_letter
-    s1 = text.gsub(/[^a-z]/, '') # gets rid of spaces
-    arr = s1.split('')
-    arr1 = arr.uniq
-    arr2 = {}
- 
-    arr1.map do |c|
-      arr2[c] =  arr.count(c)
-    end
- 
-    biggest = { arr2.keys.first => arr2.values.first }
- 
-    arr2.each do |key, value|
-      if value > biggest.values.first
-        biggest = {}
-        biggest[key] = value
-      end
-    end
- 
-    biggest
-  end
+
 end
