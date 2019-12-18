@@ -1,18 +1,11 @@
-require_relative 'config/environment'
+class Puppy
 
-class App < Sinatra::Base
+  attr_accessor :name, :breed, :age
 
-  get "/" do
-    erb :index
+  def initialize (name, breed, age)
+    @name = name
+    @breed = breed
+    @age = age
   end
 
-  get "/new" do
-    erb :create_puppy
-  end
-
-  post "/puppy" do
-    @puppy = Puppy.new(params[:name], params[:breed], params[:age])
-    erb :display_puppy
-  end
-
-end
+end 
